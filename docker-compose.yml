@@ -3,4 +3,9 @@ services:
   app:
     build: .
     ports:
-      - 8080:3000
+      - 8079:3000
+    volumes:
+      - /home/nas/proiecte/resources-cleanup-docker-vol:/app/src/resources_cleanup/files
+
+
+

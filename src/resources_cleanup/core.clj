@@ -22,17 +22,10 @@
     {:data {:muuntaja m/instance
             :middleware [muuntaja/format-middleware]}})))
 
-
-
 (defn start [] (ring-jetty/run-jetty app {:port 3000
                                           :join? false}))
 
 (defn -main
   [& args]
-  (println "calculating ...and calculating...")
-  (println (+ 1 1))
   (start))
-
-(defn print-args [args]
-  (println "passed arguments: " args))
 
