@@ -9,12 +9,21 @@
   {:status 200
    :body "On the project"})
 
+(defn ping-handler [_]
+  {:status 200
+   :body "you requested for PING"})
+
+(defn pong-handler [_]
+  {:status 200
+   :body "you requested for PONG"})
+
 (def app
   (ring/ring-handler
    (ring/router
     ["/"
      ["" string-handler]
-     ["math" {:post string-handler}]]
+     ["ping" {:get ping-handler}
+      "pong" {:get pong-handler}]]
     {:data {:muuntaja m/instance
             :middleware [muuntaja/format-middleware]}})))
 
