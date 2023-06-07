@@ -25,6 +25,9 @@
 
 (defn -main
   [& args]
-  (println "starting server ....")
-  (start))
+  (println "calculating ...and calculating...")
+  (println (+ 1 1)))
+
+(defn print-args [args]
+  (println "passed arguments: " args))
 
