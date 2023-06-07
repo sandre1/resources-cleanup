@@ -11,19 +11,14 @@
 
 (defn ping-handler [_]
   {:status 200
-   :body "you requested for PING"})
-
-(defn pong-handler [_]
-  {:status 200
-   :body "you requested for PONG"})
+   :body "PONG PONG PONG"})
 
 (def app
   (ring/ring-handler
    (ring/router
     ["/"
      ["" string-handler]
-     ["ping" {:get ping-handler}
-      "pong" {:get pong-handler}]]
+     ["ping" {:get ping-handler}]]
     {:data {:muuntaja m/instance
             :middleware [muuntaja/format-middleware]}})))
 
@@ -35,7 +30,8 @@
 (defn -main
   [& args]
   (println "calculating ...and calculating...")
-  (println (+ 1 1)))
+  (println (+ 1 1))
+  (start))
 
 (defn print-args [args]
   (println "passed arguments: " args))
