@@ -5,7 +5,7 @@ services:
     ports:
       - 8079:3000
     volumes:
-      - /home/nas/proiecte/resources-cleanup-docker-vol:/app/src/resources_cleanup/files
+      - /home/nas/proiecte/resources-cleanup-docker-vol:/app/data
 
 
 
