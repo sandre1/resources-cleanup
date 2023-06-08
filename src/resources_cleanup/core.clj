@@ -5,9 +5,10 @@
   (:gen-class))
 
 (defn check-and-move-resource! [src dest]
-  (if (fs/exists? src)
-    (fs/copy src dest)
-    (println "no files were found!!")))
+  (if-not (fs/directory? src)
+    (if (fs/exists? src)
+      (fs/copy src dest)
+      (println "no files were found!!"))))
 
 (defn manage-resource [path]
   (let [user-dir-path (System/getProperty "user.dir")
@@ -39,7 +40,9 @@
   (System/getProperty "user.dir")
   (if (fs/exists? "/home/nas/proiecte/resources-cleanup/data/source/some-doc.doc")
     (fs/copy "/home/nas/proiecte/resources-cleanup/data/source/some-doc.doc" "/home/nas/proiecte/resources-cleanup/data/target/"))
-  (file-exists? "/")
+  (fs/exists? "/home/nas/proiecte/resources-cleanup/data/source")
+  (fs/file "/home/nas/proiecte/resources-cleanup/data/source")
+  
   (-main)
 
   0)
