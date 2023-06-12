@@ -1,21 +1,23 @@
 (ns resources-cleanup.core
   (:require [babashka.fs :as fs]
             [reitit.ring :as ring]
-            [ring.adapter.jetty :as ring-jetty])
+            [ring.adapter.jetty :as ring-jetty]
+            [resources-cleanup.config :as cfg])
   (:gen-class))
 
 (defn check-and-move-resource! [src dest]
-  (if-not (fs/directory? src)
+  (when (fs/directory? src)
     (if (fs/exists? src)
       (fs/copy src dest)
       (println "no files were found!!"))))
 
 (defn manage-resource [path]
-  (let [user-dir-path (System/getProperty "user.dir")
-        src-path (str user-dir-path path)
-        dest-path (str user-dir-path "/data/target")]
-    (println src-path)
-    (check-and-move-resource! src-path dest-path) ))
+  (let [app-cfg (:app (cfg/config))
+        host-source-path (:source-dir app-cfg)
+        resource-dest-path (:target-dir app-cfg)
+        resource-path (str host-source-path path)
+        dest-path (str host-source-path resource-dest-path)]
+    (check-and-move-resource! resource-path dest-path)))
 
 (defn resource-handler [req]
   (let [path (:uri req)]
@@ -36,13 +38,10 @@
   [& args]
   (start))
 
-(comment 
-  (System/getProperty "user.dir")
-  (if (fs/exists? "/home/nas/proiecte/resources-cleanup/data/source/some-doc.doc")
-    (fs/copy "/home/nas/proiecte/resources-cleanup/data/source/some-doc.doc" "/home/nas/proiecte/resources-cleanup/data/target/"))
+(comment
   (fs/exists? "/home/nas/proiecte/resources-cleanup/data/source")
   (fs/file "/home/nas/proiecte/resources-cleanup/data/source")
-  
-  (-main)
 
-  0)
+  (-main)
+  0
+  )

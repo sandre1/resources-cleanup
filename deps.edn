@@ -4,5 +4,6 @@
         ring/ring {:mvn/version "1.9.0"}
         metosin/reitit {:mvn/version "0.5.12"}
         metosin/muuntaja {:mvn/version "0.6.8"}
-        babashka/fs {:mvn/version "0.4.19"}}
+        babashka/fs {:mvn/version "0.4.19"}
+        aero/aero {:mvn/version "1.1.6"}}
  :aliases {:start {:main-opts ["-m" "resources-cleanup.core"]}}}

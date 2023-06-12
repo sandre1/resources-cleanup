@@ -1,0 +1,2 @@
+{:app {:source-dir "/home/nas/proiecte/resources-cleanup"
+       :target-dir "/data/target"}}
