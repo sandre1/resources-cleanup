@@ -6,13 +6,14 @@
   (:gen-class))
 
 (defn check-and-move-resource! [src dest]
-  (when (fs/directory? src)
+  (when-not (fs/directory? src)
     (if (fs/exists? src)
       (fs/copy src dest)
       (println "no files were found!!"))))
 
 (defn manage-resource [path]
-  (let [app-cfg (:app @cfg/config)
+  (let [cfg (deref cfg/config)
+        app-cfg (:app cfg)
         host-source-path (:source-dir app-cfg)
         resource-path (str host-source-path path)
         resource-dest-path (:target-dir app-cfg)
