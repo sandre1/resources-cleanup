@@ -1,11 +1,19 @@
 version: '3.9'
 services:
   app:
+    image: resources-cleanup-app
     build: .
     ports:
       - 8079:3000
     volumes:
       - /home/nas/proiecte/resources-cleanup-docker-vol:/app/data
+  nginx:
+    image: nginx
+    build: .
+    ports:
+      - 8000:80
+    volumes:
+      - /home/nas/proiecte/nginx-volume:/usr/share/nginx/html/
 
 
 

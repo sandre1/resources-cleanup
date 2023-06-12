@@ -14,8 +14,8 @@
 (defn manage-resource [path]
   (let [app-cfg (:app (cfg/config))
         host-source-path (:source-dir app-cfg)
-        resource-dest-path (:target-dir app-cfg)
         resource-path (str host-source-path path)
+        resource-dest-path (:target-dir app-cfg)
         dest-path (str host-source-path resource-dest-path)]
     (check-and-move-resource! resource-path dest-path)))
 
@@ -36,12 +36,12 @@
 
 (defn -main
   [& args]
-  (start))
+  (do (cfg/load-config)
+      (start)))
 
 (comment
   (fs/exists? "/home/nas/proiecte/resources-cleanup/data/source")
   (fs/file "/home/nas/proiecte/resources-cleanup/data/source")
-
   (-main)
   0
   )
