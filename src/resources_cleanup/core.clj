@@ -2,10 +2,12 @@
   (:require [babashka.fs :as fs]
             [reitit.ring :as ring]
             [ring.adapter.jetty :as ring-jetty]
-            [resources-cleanup.config :as cfg])
+            [resources-cleanup.config :as cfg]
+            [clojure.tools.logging :as log])
   (:gen-class))
 
 (defn resource-handler [req]
+  "Checks and moves resource to a specified location"
   (let [uri (:uri req)
         app-cfg (:app @cfg/config)
         source-dir (:source-dir app-cfg)
@@ -44,4 +46,6 @@
   (-main)
   @cfg/config
   (:app @cfg/config)
-  0)
+  
+  0
+  )
