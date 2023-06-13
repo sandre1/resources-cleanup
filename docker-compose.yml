@@ -1,4 +1,7 @@
 version: '3.9'
+configs:
+  app_config:
+    file: ./config.docker.edn
 services:
   app:
     image: resources-cleanup-app
@@ -7,6 +10,9 @@ services:
       - 8079:3000
     volumes:
       - /home/nas/proiecte/resources-cleanup-docker-vol:/app/data
+    configs:
+      - source: app_config
+        target: /app/config.edn
   nginx:
     image: nginx
     build: .
