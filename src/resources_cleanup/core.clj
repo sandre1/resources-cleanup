@@ -5,27 +5,21 @@
             [resources-cleanup.config :as cfg])
   (:gen-class))
 
-(defn check-and-move-resource! [src dest]
-  (when-not (fs/directory? src)
-    (if (fs/exists? src)
-      (fs/copy src dest)
-      (println "no files were found!!"))))
-
-(defn manage-resource [path]
-  (let [cfg (deref cfg/config)
-        app-cfg (:app cfg)
-        host-source-path (:source-dir app-cfg)
-        resource-path (str host-source-path path)
-        resource-dest-path (:target-dir app-cfg)
-        dest-path (str host-source-path resource-dest-path)]
-    (check-and-move-resource! resource-path dest-path)))
-
 (defn resource-handler [req]
-  (let [path (:uri req)]
-    (println "calea este: " path)
-    (manage-resource path)
-    {:status 200
-     :body path}))
+  (let [uri (:uri req)
+        app-cfg (:app @cfg/config)
+        source-dir (:source-dir app-cfg)
+        target-dir (:target-dir app-cfg)
+        target-path (str source-dir target-dir)
+        source-path (str source-dir uri)]
+    (if (fs/directory? source-path)
+      {:status 200
+       :headers {"content-type" "text/html"}
+       :body "<html><h3>Hello from directory</h3></html>"}
+      (do (fs/move source-path target-path)
+          {:status 200
+           :headers {"content-type" "text/html"}
+           :body (str "<html><h3>Moved a resource to " target-path "</h3></html>")}))))
 
 (def app
   (ring/ring-handler
@@ -46,6 +40,8 @@
 (comment
   (fs/exists? "/home/nas/proiecte/resources-cleanup/data/source")
   (fs/file "/home/nas/proiecte/resources-cleanup/data/source")
+  (fs/regular-file? "/home/nas/proiecte/resources-cleanup/data/source/some-doc.do")
   (-main)
+  @cfg/config
   (:app @cfg/config)
   0)
