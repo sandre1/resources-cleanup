@@ -32,18 +32,20 @@
    (ring/router
     [["/*" resource-handler]])))
 
-(defn start [] (ring-jetty/run-jetty #'app {:port 3001
-                                          :join? false}))
+(defn start []
+  (let [cfg @cfg/config
+        jett-opts (:ring-jetty cfg)]
+    (ring-jetty/run-jetty #'app {:port (or (:port jett-opts) 3000)
+                                 :join? false})))
 
 (defn -main
   [& args]
-  (do (cfg/load-config)
-      (start)))
+  (cfg/load-config)
+  (start))
 
 (comment
   (fs/exists? "/home/nas/proiecte/resources-cleanup/data/source")
   (fs/file "/home/nas/proiecte/resources-cleanup/data/source")
   (-main)
   (:app @cfg/config)
-  0
-  )
+  0)

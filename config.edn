@@ -1,2 +1,3 @@
 {:app {:source-dir "/home/nas/proiecte/resources-cleanup"
-       :target-dir "/data/target"}}
+       :target-dir "/data/target"}
+ :ring-jetty {:port 3000}}
