@@ -2,7 +2,7 @@
 - to run this app you must have docker and docker compose installed on your computer
 - to build the image and start the container, run: 
 $ docker compose up
-- the app will run on localhost:3000
+- the app will run on localhost:8079
 
 ## about the app
  - se va primi requestul
