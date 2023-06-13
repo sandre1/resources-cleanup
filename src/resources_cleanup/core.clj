@@ -6,8 +6,9 @@
             [clojure.tools.logging :as log])
   (:gen-class))
 
-(defn resource-handler [req]
+(defn resource-handler
   "Checks and moves resource to a specified location"
+  [req]
   (let [uri (:uri req)
         app-cfg (:app @cfg/config)
         source-dir (:source-dir app-cfg)
@@ -16,12 +17,16 @@
         source-path (str source-dir uri)]
     (if (fs/directory? source-path)
       {:status 200
-       :headers {"content-type" "text/html"}
-       :body "<html><h3>Hello from directory</h3></html>"}
-      (do (fs/move source-path target-path)
+       :headers {"content-type" "text/plain; charset=utf-8"}
+       :body "Hello from directory"}
+      (try (fs/move source-path target-path)
           {:status 200
-           :headers {"content-type" "text/html"}
-           :body (str "<html><h3>Moved a resource to " target-path "</h3></html>")}))))
+           :headers {"content-type" "text/plain; charset=utf-8"}
+           :body (str "Moved a resource to " target-path)}
+           (catch java.nio.file.NoSuchFileException _nsfe
+             {:status 404
+              :headers {"content-type" "text/plain; charset=utf-8"}
+              :body (str "Not found " source-path)})))))
 
 (def app
   (ring/ring-handler
