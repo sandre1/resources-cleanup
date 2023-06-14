@@ -13,12 +13,13 @@
         app-cfg (:app @cfg/config)
         source-dir (:source-dir app-cfg)
         target-dir (:target-dir app-cfg)
-        target-path (str source-dir target-dir)
+        target-path (str target-dir uri)
         source-path (str source-dir uri)]
+    (log/info "Serve uri" uri ":" source-path "->" target-path)
     (if (fs/directory? source-path)
       {:status 200
        :headers {"content-type" "text/plain; charset=utf-8"}
-       :body "Hello from directoryyy"}
+       :body "Hello from directory"}
       (try (fs/move source-path target-path)
           {:status 200
            :headers {"content-type" "text/plain; charset=utf-8"}

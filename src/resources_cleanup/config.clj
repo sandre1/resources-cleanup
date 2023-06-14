@@ -1,11 +1,14 @@
 (ns resources-cleanup.config
-  (:require [aero.core :refer [read-config]]))
+  (:require [aero.core :refer [read-config]]
+            [clojure.tools.logging :as log]))
 
 (def config (atom nil))
 
 (defn load-config
   ([] (load-config (or (System/getenv "X_CONFIG_PATH") "config.edn")))
-  ([src] (reset! config (read-config src))))
+  ([src]
+   (log/info "Loading config" src)
+   (reset! config (read-config src))))
 
 
 (comment
