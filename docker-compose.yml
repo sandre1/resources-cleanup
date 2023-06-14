@@ -20,6 +20,7 @@ services:
       - 8000:80
     volumes:
       - /home/nas/proiecte/nginx-volume:/usr/share/nginx/html/
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
 
 
 

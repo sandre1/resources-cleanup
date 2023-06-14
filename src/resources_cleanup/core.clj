@@ -18,7 +18,7 @@
     (if (fs/directory? source-path)
       {:status 200
        :headers {"content-type" "text/plain; charset=utf-8"}
-       :body "Hello from directory"}
+       :body "Hello from directoryyy"}
       (try (fs/move source-path target-path)
           {:status 200
            :headers {"content-type" "text/plain; charset=utf-8"}
