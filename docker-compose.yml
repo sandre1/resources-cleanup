@@ -4,23 +4,21 @@ configs:
     file: ./config.docker.edn
 services:
   app:
-    image: resources-cleanup-app
     build: .
     ports:
       - 8079:3000
     volumes:
-      - /home/nas/proiecte/resources-cleanup-docker-vol:/app/data
+      - ./data-vol:/data
     configs:
       - source: app_config
         target: /app/config.edn
   nginx:
-    image: nginx
-    build: .
+    image: nginx:stable
     ports:
       - 8000:80
     volumes:
-      - /home/nas/proiecte/nginx-volume:/usr/share/nginx/html/
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./data-vol:/data
+      - ./nginx/conf.d:/etc/nginx/conf.d
 
 
 
