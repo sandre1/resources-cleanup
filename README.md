@@ -4,7 +4,8 @@ Docker va trebui sa fie instalat local - aplicația va rula dintr-un container d
 
 În fișierul config.edn se găsește configurația aplicației și a web serverului jetty: 
  [ring-jetty9-adapter](https://github.com/sunng87/ring-jetty9-adapter);
-  astfel, se poate modifica locația sursa si target unde aplicația să YYYYYYYYYYY
+  astfel, se poate modifica locația sursa si target
+
 
 
 # Ghid de instalare
@@ -28,18 +29,3 @@ clojure -M:start
 # build image and start docker containers
 docker compose up
 ```
-
-
-
- ## to do
- - configuratia pentru jetty va trebui sa fie optional specificata in config [done]
- - trebuie specificat content-type [done]
- - de modificat response body ( daca intorc header, standardizat sau nu )[done]
- - de implementat logging (clojure.tools logging + dialog) []
- - de pus dostrings la metode [done]
- - de revizuit numele leturilor din manage-resource [done]
- - instructiuni de build si de rulat app []
-
- - punere in productie:
-    - de numarat de cate ori se apeleaza un path ?!? pentru statistica si alte operatiuni pe baza ei
-    - de scris documentatia pentru app (ce poate face si cum se foloseste)
