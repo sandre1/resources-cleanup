@@ -36,9 +36,9 @@
 
 (defn start []
   (let [cfg @cfg/config
-        jett-opts (:ring-jetty cfg)]
-    (run-jetty app {:port (or (:port jett-opts) 3000)
-                                 :join? false})))
+        jetty-config (:jetty cfg)]
+    (log/info "configul dat este:" jetty-config)
+    (run-jetty app jetty-config)))
 
 (defn -main
   [& args]
@@ -52,6 +52,9 @@
   (-main)
   @cfg/config
   (:app @cfg/config)
-  
+  (start)
+  (let [cfg @cfg/config
+        jetty (:jetty cfg)]
+    jetty)
   0
   )
