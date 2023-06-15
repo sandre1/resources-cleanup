@@ -1,7 +1,7 @@
 (ns resources-cleanup.core
   (:require [babashka.fs :as fs]
             [reitit.ring :as ring]
-            [ring.adapter.jetty :as ring-jetty]
+            [ring.adapter.jetty9 :refer [run-jetty]]
             [resources-cleanup.config :as cfg]
             [clojure.tools.logging :as log])
   (:gen-class))
@@ -37,7 +37,7 @@
 (defn start []
   (let [cfg @cfg/config
         jett-opts (:ring-jetty cfg)]
-    (ring-jetty/run-jetty #'app {:port (or (:port jett-opts) 3000)
+    (run-jetty app {:port (or (:port jett-opts) 3000)
                                  :join? false})))
 
 (defn -main
